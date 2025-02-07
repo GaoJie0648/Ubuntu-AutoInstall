@@ -1,0 +1,14 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    hostname: ubuntu-test
+    username: user
+    password: "$6$qorAxwM/nzYevzHl$rAE7/aLNW2oWfaP26zvtkQew/lCqwQiaUZb2CYmz2NMwe6Xim2hbCDHs4Do.TNhU5YQMTN8Ku.DbY3bMBdGna1"
+  storage:
+    layout:
+      name: lvm
+  keyboard:
+    layout: us
+  locale: en_US.UTF-8
+  shutdown: poweroff
