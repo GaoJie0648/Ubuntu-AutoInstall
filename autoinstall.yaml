@@ -1,6 +1,7 @@
 #cloud-config
 autoinstall:
   version: 1
+  timezone: "Asia/Taipei"
   identity:
     hostname: ubuntu-test
     username: user
@@ -10,5 +11,18 @@ autoinstall:
       name: lvm
   keyboard:
     layout: us
-  locale: en_US.UTF-8
-  shutdown: poweroff
+    variant: ""
+    toggle: rshift_toggle
+  locale: "en_US.UTF-8"
+  late-commands:
+    - curtin in-target -- bash -c "echo '#!/bin/bash' > /usr/local/bin/open-once.sh"
+    - curtin in-target -- bash -c "echo 'if [ ! -f /tmp/firstboot_done ]; then firefox --new-window \"https://example.com\" && touch /tmp/firstboot_done; else firefox --new-window \"https://github.com\"; fi' >> /usr/local/bin/open-once.sh"
+    - curtin in-target -- chmod +x /usr/local/bin/open-once.sh
+    - curtin in-target -- bash -c "echo '[Desktop Entry]' > /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'Type=Application' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'Exec=/usr/local/bin/open-once.sh' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'Hidden=false' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'NoDisplay=false' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'X-GNOME-Autostart-enabled=true' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'Name=Firefox AutoStart' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'Comment=Launch Firefox on startup' >> /etc/xdg/autostart/firefox-autostart.desktop"
