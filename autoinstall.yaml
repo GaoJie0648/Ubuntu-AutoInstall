@@ -13,7 +13,7 @@ autoinstall:
   locale: "en_US.UTF-8"
   late-commands:
     - curtin in-target -- bash -c "echo '#!/bin/bash' > /usr/local/bin/open-once.sh"
-    - curtin in-target -- bash -c "echo 'if [ ! -f /usr/local/bin/firstboot_done ]; then firefox --new-window \"https://example.com\" && touch /usr/local/bin/firstboot_done; else firefox --new-window \"https://github.com\"; fi' >> /usr/local/bin/open-once.sh"
+    - curtin in-target -- bash -c "echo 'if [ ! -f ./firstboot_done ]; then firefox --new-window \"https://example.com\" && touch ./firstboot_done; else firefox --new-window \"https://github.com\"; fi' >> /usr/local/bin/open-once.sh"
     - curtin in-target -- chmod +x /usr/local/bin/open-once.sh
     - curtin in-target -- bash -c "echo '[Desktop Entry]' > /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'Type=Application' >> /etc/xdg/autostart/firefox-autostart.desktop"
