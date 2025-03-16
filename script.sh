@@ -11,17 +11,17 @@ fi
 
 # Check the script file is exist or not
 if [ -f ~/Ubuntu-AutoInstall/docker.sh ]; then
-    rm ~/Ubuntu-AutoInstall/docker.sh
+    sudo rm ~/Ubuntu-AutoInstall/docker.sh
 fi
 sudo wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/docker.sh -P ~/Ubuntu-AutoInstall/
 
 if [ -f ~/Ubuntu-AutoInstall/zerotier.sh ]; then
-    rm ~/Ubuntu-AutoInstall/zerotier.sh
+    sudo rm ~/Ubuntu-AutoInstall/zerotier.sh
 fi
 sudo wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/zerotier.sh -P ~/Ubuntu-AutoInstall/
 
 if [ -f ~/Ubuntu-AutoInstall/anydesk.sh ]; then
-    rm ~/Ubuntu-AutoInstall/anydesk.sh
+    sudo rm ~/Ubuntu-AutoInstall/anydesk.sh
 fi
 sudo wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/anydesk.sh -P ~/Ubuntu-AutoInstall/ 
 
