@@ -4,38 +4,32 @@
 # Get the install script from the github repository
 
 # Check the script file is exist or not
-$path = "/etc/Ubuntu-AutoInstall"
-$dockerscript = "docker.sh"
-$zerotierscript = "zerotier.sh"
-$anydeskscript = "anydesk.sh"
-
-if [ ! -d $path ]; then
-    mkdir $path
+if [ ! -d ~/Ubuntu-AutoInstall/ ]; then
+    sudo mkdir ~/Ubuntu-AutoInstall/
 fi
 
-cd $path
 
 # Check the script file is exist or not
-if [ -f $dockerscript ]; then
-    rm $dockerscript
-    wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/docker.sh
+if [ -f ~/Ubuntu-AutoInstall/docker.sh ]; then
+    rm ~/Ubuntu-AutoInstall/docker.sh
 fi
+sudo wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/docker.sh -P ~/Ubuntu-AutoInstall/
 
-if [ -f $zerotierscript ]; then
-    rm $zerotierscript
-    wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/zerotier.sh
+if [ -f ~/Ubuntu-AutoInstall/zerotier.sh ]; then
+    rm ~/Ubuntu-AutoInstall/zerotier.sh
 fi
+sudo wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/zerotier.sh -P ~/Ubuntu-AutoInstall/
 
-if [ -f $anydeskscript ]; then
-    rm $anydeskscript
-    wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/anydesk.sh
+if [ -f ~/Ubuntu-AutoInstall/anydesk.sh ]; then
+    rm ~/Ubuntu-AutoInstall/anydesk.sh
 fi
+sudo wget https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/anydesk.sh -P ~/Ubuntu-AutoInstall/ 
 
 # Run the install script
-chmod +x $dockerscript
-chmod +x $zerotierscript
-chmod +x $anydeskscript
+sudo chmod +x ~/Ubuntu-AutoInstall/docker.sh
+sudo chmod +x ~/Ubuntu-AutoInstall/zerotier.sh
+sudo chmod +x ~/Ubuntu-AutoInstall/anydesk.sh
 
-./$dockerscript
-./$zerotierscript
-./$anydeskscript
+sudo ~/Ubuntu-AutoInstall/docker.sh
+sudo ~/Ubuntu-AutoInstall/zerotier.sh
+sudo ~/Ubuntu-AutoInstall/anydesk.sh
