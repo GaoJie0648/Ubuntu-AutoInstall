@@ -30,6 +30,6 @@ sudo chmod +x ~/Ubuntu-AutoInstall/docker.sh
 sudo chmod +x ~/Ubuntu-AutoInstall/zerotier.sh
 sudo chmod +x ~/Ubuntu-AutoInstall/anydesk.sh
 
-sudo ~/Ubuntu-AutoInstall/docker.sh
-sudo ~/Ubuntu-AutoInstall/zerotier.sh
-sudo ~/Ubuntu-AutoInstall/anydesk.sh
+sudo bash ~/Ubuntu-AutoInstall/docker.sh
+sudo bash ~/Ubuntu-AutoInstall/zerotier.sh
+sudo bash ~/Ubuntu-AutoInstall/anydesk.sh
