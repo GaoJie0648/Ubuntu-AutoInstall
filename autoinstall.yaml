@@ -3,23 +3,51 @@ autoinstall:
   timezone: "Asia/Taipei"
   identity:
     hostname: Ubuntu
-    username: AutoInstall_User
-    password: "$6$qorAxwM/nzYevzHl$rAE7/aLNW2oWfaP26zvtkQew/lCqwQiaUZb2CYmz2NMwe6Xim2hbCDHs4Do.TNhU5YQMTN8Ku.DbY3bMBdGna1"
+    username: User
+    password: "$6$qorAxwM/nzYevzHl$rAE7/aLNW2oWfaP26zvtkQew/lCqwQiaUZb2CYmz2NMwe6Xim2hbCDHs4Do.TNhU5YQMTN8Ku.DbY3bMBdGna1" # 1234
+  user-data:
+    users:
+      - name: User
+        gecos: User
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        lock-passwd: false
+        passwd: "$6$qorAxwM/nzYevzHl$rAE7/aLNW2oWfaP26zvtkQew/lCqwQiaUZb2CYmz2NMwe6Xim2hbCDHs4Do.TNhU5YQMTN8Ku.DbY3bMBdGna1" # 1234
   storage:
     layout:
       name: lvm
+  packages:
+    - wget
+    - openssh-server
+    - curl
+    - git
   keyboard:
     layout: us
-  locale: "en_US.UTF-8"
+  locale: "en_US.UTF-8"                                                                                                
   late-commands:
-    - curtin in-target -- bash -c "echo '#!/bin/bash' > /usr/local/bin/open-once.sh"
-    - curtin in-target -- bash -c "echo 'if [ ! -f ./firstboot_done ]; then firefox --new-window \"https://example.com\" && touch ./firstboot_done; else firefox --new-window \"https://github.com\"; fi' >> /usr/local/bin/open-once.sh"
-    - curtin in-target -- chmod +x /usr/local/bin/open-once.sh
+    - curtin in-target -- bash -c "echo '#!/bin/bash' > /usr/local/bin/firefox.sh"
+    - curtin in-target -- bash -c "echo 'if [ ! -f ./firstboot_done ]; then firefox --new-window \"https://example.com\" && touch ./firstboot_done; else firefox --new-window \"https://github.com\"; fi' >> /usr/local/bin/firefox.sh"
+    - curtin in-target -- chmod +x /usr/local/bin/firefox.sh
     - curtin in-target -- bash -c "echo '[Desktop Entry]' > /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'Type=Application' >> /etc/xdg/autostart/firefox-autostart.desktop"
-    - curtin in-target -- bash -c "echo 'Exec=/usr/local/bin/open-once.sh' >> /etc/xdg/autostart/firefox-autostart.desktop"
+    - curtin in-target -- bash -c "echo 'Exec=/usr/local/bin/firefox.sh' >> /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'Hidden=false' >> /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'NoDisplay=false' >> /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'X-GNOME-Autostart-enabled=true' >> /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'Name=Firefox AutoStart' >> /etc/xdg/autostart/firefox-autostart.desktop"
     - curtin in-target -- bash -c "echo 'Comment=Launch Firefox on startup' >> /etc/xdg/autostart/firefox-autostart.desktop"
+
+    - curtin in-target --target=/target -- touch /etc/rc.local
+    - curtin in-target --target=/target -- bash -c "echo '#!/bin/bash' > /etc/rc.local"
+    - curtin in-target --target=/target -- bash -c "echo 'wget -O /tmp/script.sh https://raw.githubusercontent.com/GaoJie0648/Ubuntu-AutoInstall/refs/heads/main/script.sh' >> /etc/rc.local"
+    - curtin in-target --target=/target -- bash -c "echo 'chmod +x /tmp/script.sh' >> /etc/rc.local"
+    - curtin in-target --target=/target -- bash -c "echo '/tmp/script.sh' >> /etc/rc.local"
+    - curtin in-target --target=/target -- chmod +x /etc/rc.local
+
+    - curtin in-target --target=/target -- systemctl enable rc-local
+    - curtin in-target --target=/target -- systemctl start rc-local
+
+    - curtin in-target -- systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+    - curtin in-target -- systemctl restart systemd-logind.service
+
+  shutdown: reboot
